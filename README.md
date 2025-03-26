@@ -9,6 +9,7 @@ MapsFinder es una aplicación web interactiva diseñada para facilitar la búsqu
 - **Sugerencias inteligentes**: A medida que el usuario escribe en los campos de búsqueda, la aplicación ofrece sugerencias basadas en datos de OpenStreetMap.
 - **Resultados tabulares**: Los resultados de la búsqueda también se presentan en una tabla con paginación, lo que facilita la navegación por grandes conjuntos de datos.
 - **Interfaz amigable**: La aplicación cuenta con un diseño moderno y responsivo, optimizado para una experiencia de usuario fluida.
+- **Servidor backend**: Un servidor Express.js maneja las solicitudes de búsqueda y se comunica con la API de OpenStreetMap para obtener los datos.
 
 ## Tecnologías utilizadas
 
@@ -18,7 +19,8 @@ MapsFinder es una aplicación web interactiva diseñada para facilitar la búsqu
   - [OpenStreetMap Nominatim API](https://nominatim.org/) para obtener sugerencias de ubicaciones.
 
 - **Backend**:
-  - La aplicación utiliza una API personalizada para procesar las solicitudes de búsqueda y devolver los datos relevantes.
+  - [Express.js](https://expressjs.com/) para manejar las solicitudes HTTP.
+  - [Axios](https://axios-http.com/) para realizar solicitudes a la API de OpenStreetMap.
 
 ## Estructura del proyecto
 
@@ -32,24 +34,19 @@ MapsFinder-main/
 │   │   └── style.css         # Estilos personalizados de la aplicación
 │   └── js/
 │       └── script.js         # Lógica de la aplicación en JavaScript
+├── server/
+│   └── server.js             # Servidor backend con Express.js
 └── README.md                 # Documentación del proyecto
 ```
 
 ## Cómo usar la aplicación
 
-1. **Abrir la aplicación**: Accede al archivo `index.html` en tu navegador o despliega la aplicación en un servidor web.
-2. **Ingresar datos de búsqueda**: Completa uno o más campos de búsqueda (Pueblo, Comunidad Autónoma, País).
-3. **Ver resultados**:
-   - Los resultados se mostrarán en el mapa con marcadores interactivos.
-   - También se generará una tabla con los resultados, incluyendo opciones de paginación.
-4. **Explorar sugerencias**: Mientras escribes en los campos de búsqueda, aparecerán sugerencias que puedes seleccionar para agilizar la búsqueda.
+### Requisitos previos
 
-## Requisitos previos
-
+- Node.js y npm instalados en tu máquina.
 - Una clave de acceso válida para la API de Mapbox. Reemplaza `'YOUR_TOKEN'` en el archivo `script.js` con tu clave de acceso.
-- Un servidor local o entorno de desarrollo para ejecutar la aplicación si deseas probar funcionalidades avanzadas.
 
-## Instalación y configuración
+### Instalación y configuración
 
 1. Clona este repositorio en tu máquina local:
    ```bash
@@ -59,11 +56,52 @@ MapsFinder-main/
    ```bash
    cd MapsFinder-main
    ```
-3. Configura tu clave de Mapbox en el archivo `public/js/script.js`:
+3. Instala las dependencias del servidor:
+   ```bash
+   npm install
+   ```
+4. Configura tu clave de Mapbox en el archivo `public/js/script.js`:
    ```javascript
    mapboxgl.accessToken = 'YOUR_TOKEN';
    ```
-4. Abre el archivo `index.html` en tu navegador o utiliza un servidor local para ejecutar la aplicación.
+5. Inicia el servidor:
+   ```bash
+   node server/server.js
+   ```
+6. Abre tu navegador y accede a la aplicación en [http://localhost:3000](http://localhost:3000).
+
+## API del servidor
+
+El servidor backend utiliza Express.js para manejar las solicitudes. A continuación, se describe el endpoint principal:
+
+### `GET /api/data`
+
+Este endpoint realiza una búsqueda en la API de OpenStreetMap Nominatim y devuelve los resultados en formato JSON.
+
+#### Parámetros de consulta:
+
+- `param1`: Nombre del pueblo (opcional).
+- `param2`: Nombre de la comunidad autónoma (opcional).
+- `param3`: Nombre del país (opcional).
+
+#### Ejemplo de solicitud:
+
+```bash
+GET /api/data?param1=Madrid&param2=Comunidad%20de%20Madrid&param3=España
+```
+
+#### Respuesta:
+
+```json
+[
+  {
+    "display_name": "Madrid, Comunidad de Madrid, España",
+    "lat": "40.416775",
+    "lon": "-3.703790"
+  },
+  ...
+]
+```
 
 ## Contribuciones
 
@@ -90,6 +128,6 @@ Este proyecto está bajo la licencia MIT.
 
 ## Contacto
 
-Si tienes preguntas o sugerencias, no dudes en ponerte en contacto conmigo
+Si tienes preguntas o sugerencias, no dudes en ponerte en contacto conmigo.
 
 ¡Gracias por usar MapsFinder!
