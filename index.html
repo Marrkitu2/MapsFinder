@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapbox App</title>
+    <link rel="stylesheet" href="public/css/style.css">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+    <script src="js/script.js" defer></script>
+</head>
+<body>
+    <h1>Mapbox Location Finder</h1>
+    <div class="container">
+        <div id="map-container">
+            <div id="map"></div>
+            <div id="controls">
+                <label for="param1">Pueblo:</label>
+                <input type="text" id="param1" name="param1" oninput="updateSuggestions('param1')">
+                <div id="param1-suggestions" class="suggestions"></div>
+                <label for="param2">Comunidad Autonoma:</label>
+                <input type="text" id="param2" name="param2" oninput="updateSuggestions('param2')">
+                <div id="param2-suggestions" class="suggestions"></div>
+                <label for="param3">Pais:</label>
+                <input type="text" id="param3" name="param3" oninput="updateSuggestions('param3')">
+                <div id="param3-suggestions" class="suggestions"></div>
+                <button onclick="performQuery()">Search</button>
+            </div>
+        </div>
+        <div id="results">
+            <!-- Aquí se mostrará la tabla con los resultados -->
+        </div>
+    </div>
+</body>
+</html>
